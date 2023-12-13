@@ -1,0 +1,9 @@
+{
+  "tasks": {
+    "run": "deno run --watch --unstable vrappy/app.ts"
+  },
+  "fmt": {
+    "useTabs": true,
+    "semiColons": true
+  }
+}
