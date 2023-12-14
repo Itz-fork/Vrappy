@@ -3,6 +3,7 @@ Summarize videos using AI
 
 ## Features
 - Summarize youtube videos (english only)
+- Summarize local videos
 
 > [!NOTE]
 > Still in development
@@ -10,7 +11,8 @@ Summarize videos using AI
 ## TODO
 
 - [ ] Cleanup current UI
-- [x] Add support for local video files
-- [ ] Add a caching system
-- [ ] Add support large audio files (> 25mb)
-- [ ] Add support for gpt vision
+- [x] Support for local video files
+- [ ] Support for selecting audio / subtitle track
+- [ ] Caching system to reuse summarizations
+- [ ] Support large audio files (> 25mb)
+- [ ] Support for gpt vision
