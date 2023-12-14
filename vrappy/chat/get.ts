@@ -14,7 +14,10 @@ const key = `${await db_get("OPENAI_KEY")}`;
 class Summarizer {
 	static openai = new OpenAI({ apiKey: key });
 
-	public static async summarize_from_txt(sub: string | Transcription) {
+	public static async summarize_from_txt(
+		sub: string | Transcription,
+		save: boolean,
+	) {
 		console.log(`${async () => {
 			return await db_get("OPENAI_KEY");
 		}}`);
@@ -26,19 +29,21 @@ class Summarizer {
 			}],
 		});
 		let resp = opcc.choices[0].message.content?.toString();
-		await Deno.writeFile(
-			`${Deno.cwd()}/summarized.txt`,
-			new TextEncoder().encode(resp),
-		);
+		if (save) {
+			await Deno.writeFile(
+				`${Deno.cwd()}/summarized.txt`,
+				new TextEncoder().encode(resp),
+			);
+		}
 		return resp;
 	}
 
-	public static async summarize_from_audio(path: string) {
+	public static async summarize_from_audio(path: string, save: boolean) {
 		let file = await toFile(createReadStream(path));
 		let resp = await this.openai.audio.transcriptions.create(
 			{ file: file, model: "whisper-1", response_format: "text" },
 		);
-		return await this.summarize_from_txt(resp);
+		return await this.summarize_from_txt(resp, save);
 	}
 }
 

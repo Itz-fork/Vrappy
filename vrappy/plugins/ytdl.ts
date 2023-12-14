@@ -1,5 +1,5 @@
 import { vwd } from "../helpers/envs.ts";
-
+import { parse_srt } from "../helpers/parser.ts";
 
 /**
  * yt-dlp cli wrapper
@@ -27,27 +27,13 @@ export class Ytdl {
 	 *  - extract subtitle from a youtube video and returns it as a string in a readable format
 	 *    english only for now
 	 */
-	public static async extract_sub(url: string, save: boolean | undefined) {
+	public static async extract_sub(url: string) {
 		const cmd =
 			`--ignore-errors -S res:360 -o ${vwd}/${this.srtOut} --write-sub --write-auto-sub --sub-format ttml --convert-subs srt --skip-download ${url}`
 				.split(" ");
 		await this.run_sh(cmd);
-		const bSrt = await Deno.readTextFile(`${vwd}/${this.srtOut}.en.srt`);
-		if (save) {
-			await Deno.writeFile(
-				`${this.srtOut}.en.srt`,
-				new TextEncoder().encode(this.parse_srt(bSrt)),
-			);
-		}
-		return this.parse_srt(bSrt);
-	}
-
-	private static parse_srt(srt: string) {
-		// remove timestamps, new lines
-		let parsed = srt.replace(/(\d|:|-->|,)|(<[^>]*>)|(\n)/g, "");
-		// remove additional whitespaces
-		parsed = parsed.replace(/(\s\s)/g, " ");
-		return parsed;
+		const bSrt = await parse_srt(`${vwd}/${this.srtOut}.en.srt`)
+		return bSrt;
 	}
 
 	private static async run_sh(cmd: string[]) {

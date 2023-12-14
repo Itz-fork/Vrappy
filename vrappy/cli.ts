@@ -8,6 +8,7 @@ import { regexes } from "./helpers/regex.ts";
 import { Ytdl } from "./plugins/ytdl.ts";
 import { ffmpeg } from "./plugins/ffmpeg.ts";
 import { Summarizer } from "./chat/get.ts";
+import { parse_srt } from "./helpers/parser.ts";
 
 async function ask() {
 	// Get path to video file and validates it
@@ -38,29 +39,34 @@ async function ask() {
 	return { path, method, save };
 }
 
-async function summarize_from_yt(url: string, method: string, save: boolean) {
+async function summarize_from_yt(
+	url: string,
+	method: string,
+	save: boolean,
+) {
 	if (method == "sub") {
-		let yt_sresp = await Ytdl.extract_sub(url, save);
-		return await Summarizer.summarize_from_txt(yt_sresp);
+		let yt_sresp = await Ytdl.extract_sub(url);
+		return await Summarizer.summarize_from_txt(yt_sresp, save);
 	} else {
 		let yt_aresp = await Ytdl.extract_audio(url);
-		return await Summarizer.summarize_from_audio(yt_aresp);
+		return await Summarizer.summarize_from_audio(yt_aresp, save);
 	}
 }
 
-// async function summarize_from_local(
-// 	path: string,
-// 	method: string,
-// 	save: boolean,
-// ) {
-// 	if (method == "sub") {
-// 		const yt_sresp = await Ytdl.extract_sub(url, save);
-// 		return await summarize_from_txt(yt_sresp);
-// 	} else {
-// 		let yt_aresp = await Ytdl.extract_audio(url);
-// 		return await summarize_from_audio(yt_aresp);
-// 	}
-// }
+async function summarize_from_local(
+	path: string,
+	method: string,
+	save: boolean,
+) {
+	if (method == "sub") {
+		let esf = await ffmpeg.extract_sub(path);
+		let lc_sresp = await parse_srt(path = esf);
+		return await Summarizer.summarize_from_txt(lc_sresp, save);
+	} else {
+		let lc_aresp = await ffmpeg.extract_audio(path);
+		return await Summarizer.summarize_from_audio(lc_aresp, save);
+	}
+}
 
 async function run() {
 	const { path, method, save } = await ask();
@@ -68,10 +74,10 @@ async function run() {
 
 	if (path.from == "youtube") {
 		resp = await summarize_from_yt(path.where, method, save);
-		console.log("done");
+	} else {
+		resp = await summarize_from_local(path.where, method, save);
 	}
 }
 
-
-await setup_env()
+await setup_env();
 await run();
