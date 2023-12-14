@@ -1,6 +1,7 @@
 .vrappy
 .vscode
 
+deno.lock
 rands.ts
 
 secret.txt
