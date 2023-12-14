@@ -23,10 +23,14 @@ class Summarizer {
 		}}`);
 		let opcc = await this.openai.chat.completions.create({
 			model: "gpt-3.5-turbo-16k",
-			messages: [{
-				role: "assistant",
-				content: `Summarize this: ${sub}`,
-			}],
+			messages: [
+				{
+					role: "system",
+					content:
+						"You are an assistant that is specialized in summarizing text. When you receive text, you provide a concise and clear summary of it.",
+				},
+				{ role: "assistant", content: `${sub}` },
+			],
 		});
 		let resp = opcc.choices[0].message.content?.toString();
 		if (save) {
