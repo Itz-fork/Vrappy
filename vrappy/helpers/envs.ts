@@ -2,12 +2,11 @@ import { Input } from "https://deno.land/x/cliffy@v1.0.0-rc.3/prompt/mod.ts";
 
 
 const kv = await Deno.openKv();
+const vwd = `${Deno.cwd()}/.vrappy/`
 
 async function setup_env() {
     // await kv.delete(["OPENAI_KEY"])
 
-    // Set cwd
-    await kv.set(["VRAPPY_DIR"], `${Deno.cwd()}/.vrappy/`);
     // Set api key
     if (!(await kv.get(["OPENAI_KEY"])).value) {
         let tOKy = await Input.prompt("Enter your OpenAI key")
@@ -22,4 +21,4 @@ async function db_get(key: string) {
 
 await setup_env()
 
-export {setup_env, db_get}
+export {setup_env, db_get, vwd}

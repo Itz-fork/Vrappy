@@ -1,13 +1,13 @@
+import { vwd } from "../helpers/envs.ts";
+
+
 /**
  * ffmpeg cli wrapper
  * 
  * used to extract audio and subtitles from local videos
  */
-
-
 export class ffmpeg {
-  static cwd = `${Deno.env.get("VRAPPY_DIR")}`;
-  static srtOut = "fm_srt_out";
+  static srtOut = "fm_srt_out.srt";
   static audOut = "fm_vid_out.mp3";
 
 
@@ -16,17 +16,21 @@ export class ffmpeg {
      *  - Extract audio from a video
      */
     public static async extract_audio(input: string) {
-        const cmd = `-i ${input} -map 0:a ${this.audOut}`.split(" ")
+        let outp = `${vwd}${this.audOut}`
+        const cmd = `-i ${input} -map 0:a ${outp}`.split(" ")
         await this.run_sh(cmd)
+        return outp
     }
 
     /**
      * extract_sub
-     *  - Extract subtitles from a video
+     *  - Extract subtitles from a video (limited to first sub for now)
      */
     public static async extract_sub(input: string) {
-        const cmd = `-i ${input} -map 0:s:0 ${this.srtOut}`.split(" ")
+        let outp = `${vwd}${this.srtOut}`
+        const cmd = `-i ${input} -map 0:s:0 ${outp}`.split(" ")
         await this.run_sh(cmd)
+        return outp
     }
 
     private static async run_sh(cmd: string[]) {
@@ -40,7 +44,3 @@ export class ffmpeg {
         }
     }
 }
-
-// let path = "/home/hirusha/Projects/Vreflect/test.webm"
-// await ffmpeg.extract_audio(path)
-// await ffmpeg.extract_sub(path)

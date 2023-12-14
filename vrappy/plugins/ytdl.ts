@@ -1,13 +1,12 @@
+import { vwd } from "../helpers/envs.ts";
+
+
 /**
  * yt-dlp cli wrapper
  * 
  * used to extract audio and subtitles from youtube videos
  */
-
-
 export class Ytdl {
-	// static vwd = `${Deno.env.get("VRAPPY_DIR")}`;
-	static vwd = `${Deno.cwd()}/.vrappy/`
 	static srtOut = "yt_sub_out";
 	static audOut = "yt_vid_out";
 
@@ -17,10 +16,10 @@ export class Ytdl {
 	 */
 	public static async extract_audio(url: string) {
 		const cmd =
-			`--ignore-errors --output ${this.vwd}/${this.audOut} --extract-audio --audio-format mp3 ${url}`
+			`--ignore-errors --output ${vwd}/${this.audOut} --extract-audio --audio-format mp3 ${url}`
 				.split(" ");
 		await this.run_sh(cmd);
-		return `${this.vwd}/${this.audOut}.mp3`
+		return `${vwd}/${this.audOut}.mp3`
 	}
 
 	/**
@@ -30,10 +29,10 @@ export class Ytdl {
 	 */
 	public static async extract_sub(url: string, save: boolean | undefined) {
 		const cmd =
-			`--ignore-errors -S res:360 -o ${this.vwd}/${this.srtOut} --write-sub --write-auto-sub --sub-format ttml --convert-subs srt --skip-download ${url}`
+			`--ignore-errors -S res:360 -o ${vwd}/${this.srtOut} --write-sub --write-auto-sub --sub-format ttml --convert-subs srt --skip-download ${url}`
 				.split(" ");
 		await this.run_sh(cmd);
-		const bSrt = await Deno.readTextFile(`${this.vwd}/${this.srtOut}.en.srt`);
+		const bSrt = await Deno.readTextFile(`${vwd}/${this.srtOut}.en.srt`);
 		if (save) {
 			await Deno.writeFile(
 				`${this.srtOut}.en.srt`,

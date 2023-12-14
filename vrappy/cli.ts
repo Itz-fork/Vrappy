@@ -3,7 +3,7 @@ import {
 	Select,
 	Toggle,
 } from "https://deno.land/x/cliffy@v1.0.0-rc.3/prompt/mod.ts";
-import { setup_env } from "./helpers/setup.ts";
+import { setup_env } from "./helpers/envs.ts";
 import { regexes } from "./helpers/regex.ts";
 import { Ytdl } from "./plugins/ytdl.ts";
 import { ffmpeg } from "./plugins/ffmpeg.ts";
