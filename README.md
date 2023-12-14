@@ -11,5 +11,6 @@ Summarize videos using AI
 
 - [ ] Cleanup current UI
 - [ ] Add support for local video files
+- [ ] Add a caching system
 - [ ] Add support large audio files (> 25mb)
 - [ ] Add support for gpt vision
