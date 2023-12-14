@@ -8,6 +8,13 @@ Summarize videos using AI
 > [!NOTE]
 > Still in development
 
+## Usage
+```sh
+git clone https://github.com/Itz-fork/Vrappy.git
+cd vrappy
+deno run --allow-run --allow-read --allow-write --allow-env --allow-net --unstable vrappy/cli.ts
+```
+
 ## TODO
 
 - [ ] Cleanup current UI
