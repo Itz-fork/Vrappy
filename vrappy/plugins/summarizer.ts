@@ -1,10 +1,10 @@
 import { OpenAI, toFile } from "https://deno.land/x/openai@v4.20.1/mod.ts";
 import { createReadStream } from "https://deno.land/std@0.153.0/node/fs.ts";
 import { type Transcription } from "https://deno.land/x/openai@v4.20.1/resources/audio/transcriptions.ts";
-import { Ytdl } from "../plugins/ytdl.ts";
-import { ffmpeg } from "../plugins/ffmpeg.ts";
+import { Ytdl } from "./ytdl.ts";
+import { ffmpeg } from "./ffmpeg.ts";
 import { db_get } from "../helpers/envs.ts";
-import { parse_srt } from "./parser.ts";
+import { parse_srt } from "../helpers/parser.ts";
 
 // Openai api key
 const key = `${await db_get("OPENAI_KEY")}`;

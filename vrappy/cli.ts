@@ -5,7 +5,7 @@ import {
 } from "https://deno.land/x/cliffy@v1.0.0-rc.3/prompt/mod.ts";
 import { setup_env } from "./helpers/envs.ts";
 import { regexes } from "./helpers/regex.ts";
-import { Summarizer } from "./helpers/summarizer.ts";
+import { Summarizer } from "./plugins/summarizer.ts";
 
 async function ask() {
 	// Get path to video file and validates it
