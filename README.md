@@ -16,4 +16,4 @@ deno run --allow-run --allow-read --allow-write --allow-env --allow-net --unstab
 ```
 
 # Roadmap
-See [https://github.com/Itz-fork/Vrappy/issues/1]
+See [todo list](https://github.com/Itz-fork/Vrappy/issues/1)

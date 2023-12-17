@@ -1,8 +1,8 @@
 .vrappy
 .vscode
 
+tests
 deno.lock
-rands.ts
 
 secret.txt
 resp.txt

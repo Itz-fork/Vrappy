@@ -14,6 +14,7 @@ export class ffmpeg {
     /**
      * extract_audio
      *  - Extract audio from a video
+     * @returns file path
      */
     public static async extract_audio(input: string) {
         let outp = `${vwd}${this.audOut}`
@@ -25,6 +26,7 @@ export class ffmpeg {
     /**
      * extract_sub
      *  - Extract subtitles from a video (limited to first sub for now)
+     * @returns file path
      */
     public static async extract_sub(input: string) {
         let outp = `${vwd}${this.srtOut}`
